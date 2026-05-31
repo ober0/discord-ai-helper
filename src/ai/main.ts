@@ -11,9 +11,11 @@ import { deleteChannelTool } from "./tools/delete-channel";
 import { editeChannelTool } from "./tools/edite-channel";
 import { deleteRoleTool } from "./tools/delete-role";
 import { addRoleTool } from "./tools/add-role";
+import { muteUserTool } from "./tools/mute-user";
+import { unmuteUserTool } from "./tools/unmute-user";
 
 
-export const tools = [findChannelsTool, findRoleTool, findUserTool, moveUserTool, moveAllUsersTool,createChannelTool, deleteChannelTool, editeChannelTool, deleteRoleTool, addRoleTool]
+export const tools = [findChannelsTool, findRoleTool, findUserTool, moveUserTool, moveAllUsersTool,createChannelTool, deleteChannelTool, editeChannelTool, deleteRoleTool, addRoleTool, muteUserTool, unmuteUserTool]
 
 export const llm = new ChatOpenAI({
     apiKey: process.env.DEEPSEEK_API_KEY,

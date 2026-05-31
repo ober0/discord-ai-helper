@@ -2,34 +2,30 @@ import { tool } from "@langchain/core/tools";
 import client from "../../bot/client";
 import z from "zod";
 
-const AddRoleSchema = z.object({
+const UnmuteUserSchema = z.object({
     userId: z.string(),
-    roleId: z.string(),
 });
 
-export const addRoleTool = tool(
-    async (data: z.infer<typeof AddRoleSchema>) => {
+export const unmuteUserTool = tool(
+    async (data: z.infer<typeof UnmuteUserSchema>) => {
         const guild = await client.guilds.fetch(process.env.GUILD_ID!);
 
         if (!guild) {
             return { success: false, message: "Канал не найден" };
         }
 
-        const role = await guild.roles.fetch(data.roleId);
-        if (!role) {
-            return { success: false, message: "Роль не найдена" };
-        }
 
         const member = await guild.members.fetch(data.userId);
         if (!member) {
             return { success: false, message: "Юзер не найден" };
         }
 
-        await member.roles.add(role);
+        await member.timeout(null);
+
     },
     {
-        name: "addRole",
-        description: "Добавляет роль пользователю на сервере",
-        schema: AddRoleSchema,
+        name: "unmuteUser",
+        description: "Снимает мут с пользователя",
+        schema: UnmuteUserSchema,
     }
 );
