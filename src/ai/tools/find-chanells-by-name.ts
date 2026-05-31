@@ -15,7 +15,6 @@ export const findChannelsByNameTool = tool(
     }) => {
         const guild = await client.guilds.fetch(process.env.GUILD_ID!);
 
-        console.log(filters);
 
         if (!guild) {
             return JSON.stringify([]);
