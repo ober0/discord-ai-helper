@@ -2,9 +2,10 @@ import { ChatOpenAI } from "@langchain/openai"
 import './graph'
 import { getChannelsInfoTool } from "./tools/get-chanells";
 import { AI_MODELS } from "../consts";
+import { findChannelsByNameTool } from "./tools/find-chanells-by-name";
 
 
-export const tools = [getChannelsInfoTool]
+export const tools = [getChannelsInfoTool, findChannelsByNameTool]
 
 export const llm = new ChatOpenAI({
     apiKey: process.env.DEEPSEEK_API_KEY,
