@@ -1,0 +1,8 @@
+# Default ignored files
+/../../discord-ai-helper /.idea/shelf/
+/../../discord-ai-helper /.idea/workspace.xml
+# Editor-based HTTP Client requests
+/../../discord-ai-helper /.idea/httpRequests/
+# Datasource local storage ignored files
+/../../discord-ai-helper /.idea/dataSources/
+/../../discord-ai-helper /.idea/dataSources.local.xml

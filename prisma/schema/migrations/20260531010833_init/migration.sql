@@ -1,4 +1,4 @@
--- CreateTable
+ -- CreateTable
 CREATE TABLE "action_history" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "userName" TEXT NOT NULL,
