@@ -17,6 +17,13 @@ export async function aiCallProcess(message: Message): Promise<CallProcess> {
                 new SystemMessage(
                     BASE_PROMPT
                 ),
+                new SystemMessage(
+                    JSON.stringify({
+                        callerId: message.author.id,
+                        channelId: message.channel.id,
+                        guildId: message.guild?.id ?? 0,
+                    })
+                ),
                 new HumanMessage(message.content)
             ]
         },

@@ -1,5 +1,5 @@
 import { prisma } from "../prisma";
-import { ActionHistory } from "@prisma/client";
+import { ActionHistory, AiUsage } from "@prisma/client";
 import { Action } from "../types/action";
 
 export async function createAction(action: Action): Promise<ActionHistory | { error: string }> {
@@ -22,6 +22,16 @@ export async function createAction(action: Action): Promise<ActionHistory | { er
             error: e.message ?? 'Неизвестная ошибка',
         }
     }
+}
 
+export async function getActions(timeHours?: number): Promise<(ActionHistory &{usage: AiUsage | null})[]> {
+    const where = timeHours
+        ? {
+            createdAt: {
+                gte: new Date(Date.now() - timeHours * 3_600_000)
+            }
+        }
+        : {};
 
+    return prisma.actionHistory.findMany({ where, include: {usage: true} });
 }
