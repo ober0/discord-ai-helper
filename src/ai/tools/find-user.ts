@@ -18,7 +18,7 @@ export const findUserTool = tool(
 
         const members = await guild.members.fetch();
         const list = [...members.values()];
-        
+
 
         const filtered = list.filter(member => {
             if (filters.name) {
@@ -60,6 +60,8 @@ export const findUserTool = tool(
                 : null,
             joinedAt: member.joinedAt
         }));
+
+        console.log(result);
 
         return JSON.stringify(result);
     },
