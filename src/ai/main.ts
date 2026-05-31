@@ -5,9 +5,15 @@ import { findChannelsTool } from "./tools/find-chanells";
 import { findRoleTool } from "./tools/find-role";
 import { findUserTool } from "./tools/find-user";
 import { moveUserTool } from "./tools/move-user";
+import { moveAllUsersTool } from "./tools/move-all-user";
+import { createChannelTool } from "./tools/create-channel";
+import { deleteChannelTool } from "./tools/delete-channel";
+import { editeChannelTool } from "./tools/edite-channel";
+import { deleteRoleTool } from "./tools/delete-role";
+import { addRoleTool } from "./tools/add-role";
 
 
-export const tools = [findChannelsTool, findRoleTool, findUserTool, moveUserTool]
+export const tools = [findChannelsTool, findRoleTool, findUserTool, moveUserTool, moveAllUsersTool,createChannelTool, deleteChannelTool, editeChannelTool, deleteRoleTool, addRoleTool]
 
 export const llm = new ChatOpenAI({
     apiKey: process.env.DEEPSEEK_API_KEY,

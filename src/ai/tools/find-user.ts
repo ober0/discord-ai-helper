@@ -12,7 +12,6 @@ const FindUserFiltersSchema = z.object({
 export const findUserTool = tool(
     async (filters: z.infer<typeof FindUserFiltersSchema>) => {
 
-        console.log(filters);
         const guild = await client.guilds.fetch(process.env.GUILD_ID!);
         if (!guild) return [];
 
@@ -61,7 +60,6 @@ export const findUserTool = tool(
             joinedAt: member.joinedAt
         }));
 
-        console.log(result);
 
         return JSON.stringify(result);
     },

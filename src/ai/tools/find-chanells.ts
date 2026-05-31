@@ -70,7 +70,12 @@ export const findChannelsTool = tool(
                     isVoice,
                     membersCount,
                     members,
-                    isPrivate
+                    isPrivate,
+                    nsfw: channel.type === ChannelType.GuildText ? channel.nsfw : undefined,
+                    voiceSettings: channel.type === ChannelType.GuildVoice ? {
+                        bitrate: channel.bitrate,
+                        userLimit: channel.userLimit
+                    } : undefined
                 };
             })
             .filter(el => {
