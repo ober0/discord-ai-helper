@@ -4,9 +4,15 @@ model ActionHistory {
   userName      String
   userDiscordId String
 
-  action String
+  req String
+  res String
 
-  jsonData String
+  usage   AiUsage? @relation(fields: [usageId], references: [id])
+  usageId Int?     @unique
+
+  aiCalls Int
+
+  timeMs Int
 
   createdAt DateTime @default(now())
 

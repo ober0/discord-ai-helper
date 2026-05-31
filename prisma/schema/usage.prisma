@@ -1,0 +1,15 @@
+model AiUsage {
+  id Int @id @default(autoincrement())
+
+  inputTokens       Int
+  outputTokens      Int
+  inputCachedTokens Int
+
+  model String
+
+  actionHistory ActionHistory?
+
+  createdAt DateTime @default(now())
+
+  @@map("ai_usage")
+}
