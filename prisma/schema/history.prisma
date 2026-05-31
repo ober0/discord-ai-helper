@@ -1,0 +1,14 @@
+model ActionHistory {
+  id Int @id @default(autoincrement())
+
+  userName      String
+  userDiscordId String
+
+  action String
+
+  jsonData String
+
+  createdAt DateTime @default(now())
+
+  @@map("action_history")
+}

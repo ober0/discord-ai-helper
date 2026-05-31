@@ -1,0 +1,29 @@
+{
+  "name": "discord-ai-helper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "prisma": {
+    "schema": "./prisma/schema"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node src/index.ts",
+    "prod": "node src/index.js",
+    "generate": "npx prisma generate --schema ./prisma/schema",
+    "migrate:dev": "npx prisma migrate dev --schema ./prisma/schema",
+    "migrate:deploy": "npx prisma migrate deploy --schema ./prisma/schema",
+    "reset": "npx prisma migrate reset --force --schema ./prisma/schema"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.19.3",
+    "discord.js": "^14.26.4",
+    "dotenv": "^17.4.2",
+    "prisma": "6.19.0",
+    "ts-node": "^10.9.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.3"
+  },
+  "private": true
+}
