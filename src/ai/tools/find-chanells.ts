@@ -1,10 +1,20 @@
 import { tool } from "@langchain/core/tools";
 import client from "../../bot/client";
 import { ChannelType } from "discord.js";
+import z from "zod";
 
-export const getChannelsInfoTool = tool(
-    async () => {
+
+export const findChannelsTool = tool(
+    async (filters: {
+        name?: string,
+        userCount?: {
+            lte?: number,
+            gte?: number
+        },
+        type?: 'voice' | 'text' | 'category' | 'media'
+    }) => {
         const guild = await client.guilds.fetch(process.env.GUILD_ID!);
+
 
         if (!guild) {
             return JSON.stringify([]);
@@ -13,7 +23,6 @@ export const getChannelsInfoTool = tool(
         const channels = await guild.channels.fetch();
 
         const result = [...channels.values()]
-            .filter(Boolean)
             .map(channel => {
                 if (!channel) return null;
 
@@ -64,12 +73,53 @@ export const getChannelsInfoTool = tool(
                     isPrivate
                 };
             })
-            .filter(Boolean);
+            .filter(el => {
+                if (!el) {
+                    return false
+                }
+                if (filters.name) {
+                    if (!el?.name?.toLowerCase().includes(filters.name.toLowerCase())) {
+                        return false;
+                    }
+                }
+
+                if (filters.userCount) {
+                    const count = el?.membersCount;
+
+                    if (filters.userCount.lte != null) {
+                        if (count == null || count > filters.userCount.lte) {
+                            return false;
+                        }
+                    }
+
+                    if (filters.userCount.gte != null) {
+                        if (count == null || count < filters.userCount.gte) {
+                            return false;
+                        }
+                    }
+                }
+
+                if (filters.type) {
+                    if (el.type !== filters.type) {
+                        return false;
+                    }
+                }
+
+                return true;
+            });
 
         return JSON.stringify(result);
     },
     {
-        name: "getChannels",
-        description: "Получает все каналы сервера с типами, категориями, приватностью и voice статистикой, а так же список юзеров в войс каналах и их количество."
+        name: "findChannels",
+        description: "Получает по фильтрам каналы сервера с типами, категориями, приватностью и voice статистикой, а так же список юзеров в войс каналах и их количество.",
+        schema: z.object({
+            name: z.string().optional().describe('Поиск по имени канала'),
+            userCount: z.object({
+                lte: z.number().optional().describe('Меньше или равно'),
+                gte: z.number().optional().describe('Больше или равно'),
+            }).optional(),
+            type: z.string().optional().describe('Тип канала: voice | text | category | media'),
+        })
     }
 );
