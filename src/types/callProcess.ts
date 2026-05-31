@@ -2,8 +2,8 @@ import { TokenUsage } from "./usage";
 
 export interface CallProcess {
     text: string;
-    usage: TokenUsage,
-    messageCount: {
+    usage?: TokenUsage,
+    messageCount?: {
         total: number;
         ai: number
         tools: number

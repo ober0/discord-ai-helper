@@ -21,17 +21,26 @@ export async function aiCallProcess(message: Message): Promise<CallProcess> {
             ]
         },
         {
+            recursionLimit: 15,
             configurable: {
                 callerId: message.author.id,
                 channelId: message.channel.id,
                 guildId: message.guild?.id ?? 0,
             }
         }
-    )
+    ).catch(console.error);
 
     const end = performance.now();
 
     const time = end - start
+
+
+    if (!aiResponse) {
+        return {
+            text: `произошла ошибка (${time}ms)`,
+            time
+        }
+    }
 
     let responseMessageText = (aiResponse.messages.at(-1)?.text ?? `Произошла ошибка и я не смог обработать ваш запрос.`) + ` (${Math.round(time)} ms)`
     const usage: TokenUsage = aiResponse.messages
